@@ -1,10 +1,10 @@
-// Full BG para IEs 6,7 e 8
+// Background Size Cover para IEs 6,7 e 8
 if (!$.support.leadingWhitespace)
 {
     var $win = $(window);
     var $tbls = $('.tbl');
 
-    $.each($tbls.find('td'), function(k, v) {
+    $.each($tbls.find('.cover'), function(k, v) {
         var $td = $(v);
         var url = $td.css('backgroundImage');
         url = url.replace('url(', '');
@@ -13,8 +13,10 @@ if (!$.support.leadingWhitespace)
         url = url.replace('\'', '');
         url = url.replace('"', '');
         url = url.replace(')', '');
-        $td.append('<div class="viewport"><img src="'+url+'"></div>');
-        $td.removeClass('img');
+        $td
+        .append('<div class="viewport"><img src="'+url+'"></div>')
+        .removeClass('cover')
+        .addClass('resizer');
     });
 
     $win.on('resize', { 'tbls': $tbls }, function(ev) {
@@ -24,7 +26,7 @@ if (!$.support.leadingWhitespace)
 
     function tdsCover(scope) {
         var min_w = 0;
-        $.each(scope.find('td'), function(k, v) {
+        $.each(scope.find('.resizer'), function(k, v) {
             var $td = $(v),
                 $viewport = $td.find('.viewport:eq(0)'),
                 $img = $viewport.find('img:eq(0)'),
